@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#/usr/bin/python
 from numpy import matrix
 from math import pow, sqrt
 from random import randint
@@ -15,12 +15,12 @@ class qubit():
 		self.__X = matrix([[0,1],[1,0]])
 	def show(self):
 		aux = ""
-		if round(matrix([1,0])*self.__state,2):
-			aux += "{0}|0>".format(str(round(matrix([1,0])*self.__state,2)) if round(matrix([1,0])*self.__state,2) != 1.0 else '')
-		if round(matrix([0,1])*self.__state,2):
+		if round((matrix([1,0])*self.__state).item(),2):
+			aux += "{0}|0>".format(str(round((matrix([1,0])*self.__state).item(),2)) if round((matrix([1,0])*self.__state).item(),2) != 1.0 else '')
+		if round((matrix([0,1])*self.__state).item(),2):
 			if aux:
 				aux += " + "
-			aux += "{0}|1>".format(str(round(matrix([0,1])*self.__state,2)) if round(matrix([0,1])*self.__state,2) != 1.0 else '')
+			aux += "{0}|1>".format(str(round((matrix([0,1])*self.__state).item(),2)) if round((matrix([0,1])*self.__state).item(),2) != 1.0 else '')
 		return aux
 	def measure(self):
 		if self.__measured:
@@ -109,49 +109,49 @@ def QKD(N,verbose=False,eve_present=False):
 	if alice_key != bob_key:
 		key = False
 		length = None
-		print "Encription key mismatch, eve is present."
+		print("Encription key mismatch, eve is present.")
 	else:
 		key = True
 		length = len(bob_key)
-		print "Successfully exchanged key!"
-		print "Key Length: " + str(length)
+		print("Successfully exchanged key!")
+		print("Key Length: " + str(length))
 	if verbose:
-		print "Alice generates {0} random basis.".format(str(N))
-		raw_input()
-		print ''.join(str(e) for e in alice_basis)
-		raw_input()
-		print "Alice generates {0} random bits.".format(str(N))
-		raw_input()
-		print ''.join(str(e) for e in alice_bits)
-		raw_input()
-		print "Alice sends to Bob {0} encoded Qubits.".format(str(N))
-		raw_input()
+		print("Alice generates {0} random basis.".format(str(N)))
+		input()
+		print(''.join(str(e) for e in alice_basis))
+		input()
+		print("Alice generates {0} random bits.".format(str(N)))
+		input()
+		print(''.join(str(e) for e in alice_bits))
+		input()
+		print("Alice sends to Bob {0} encoded Qubits.".format(str(N)))
+		input()
 		aux = ""
 		for q in alice_qubits:
 			aux += q.show() + "   "
-		print aux
-		raw_input()
+		print(aux)
+		input()
 		if eve_present:
-			print "Eve intercepts Qubits!"
-			raw_input()
-			print ''.join(str(e) for e in eve_basis)
-			raw_input()
-			print "Eve's bits."
-			raw_input()
-			print ''.join(str(e) for e in eve_bits)
-			raw_input()
-		print "Bob generates {0} random basis.".format(str(N))
-		raw_input()
-		print ''.join(str(e) for e in bob_basis)
-		raw_input()
-		print "Bob receives and decodes Alice's Qubits."
-		raw_input()
-		print ''.join(str(e) for e in bob_bits)
-		raw_input()
-		print "Alice and Bob interchange basis through Internet and compare their basis."
-		raw_input()
-	#print "Key obtained: " + ''.join(str(e) for e in bob_bits)
-	#print "Efficiency: {0}%".format(str(round((float(len(key))/float(len(alice_bits)))*100.0)))
+			print("Eve intercepts Qubits!")
+			input()
+			print(''.join(str(e) for e in eve_basis))
+			input()
+			print("Eve's bits.")
+			input()
+			print(''.join(str(e) for e in eve_bits))
+			input()
+		print("Bob generates {0} random basis.".format(str(N)))
+		input()
+		print(''.join(str(e) for e in bob_basis))
+		input()
+		print("Bob receives and decodes Alice's Qubits.")
+		input()
+		print(''.join(str(e) for e in bob_bits))
+		input()
+		print("Alice and Bob interchange basis through Internet and compare their basis.")
+		input()
+	#print("Key obtained: " + ''.join(str(e) for e in bob_bits)
+	#print("Efficiency: {0}%".format(str(round((float(len(key))/float(len(alice_bits)))*100.0)))
 	return key
 
 if __name__ == "__main__":
@@ -171,12 +171,12 @@ if __name__ == "__main__":
 	else:
 		N = 1
 	for i in range(N):
-		print "############# {0} #############".format(str(i))
+		print("############# {0} #############".format(str(i)))
 		ret.append(QKD(int(args.qubits),verbose=args.verbose,eve_present=args.eve))
-		print "###############################".format(str(i))
-	print "############################"
-	print "############################"
+		print("###############################".format(str(i)))
+	print("############################")
+	print("############################")
 	t = "{0:.2f}".format(float(ret.count(True))*100.0/float(N))
 	u = "{0:.2f}".format(float(ret.count(False))*100.0/float(N))
-	print "True: {0} <{1}%>".format(ret.count(True),str(t))
-	print "False: {0} <{1}%>".format(ret.count(False),str(u))
+	print("True: {0} <{1}%>".format(ret.count(True),str(t)))
+	print("False: {0} <{1}%>".format(ret.count(False),str(u)))
