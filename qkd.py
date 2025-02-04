@@ -90,22 +90,40 @@ def generate_random_bits(N):
 def QKD(N,verbose=False,eve_present=False):
 	alice_basis = generate_random_bits(N)
 	alice_bits = generate_random_bits(N)
+	# print("Alice basis: ",alice_basis)
+	# print("alice bits: ",alice_bits)
 	alice = quantum_user("Alice")
 	alice_qubits = alice.send(data=alice_bits,basis=alice_basis)
+	# aux = ""
+	# for q in alice_qubits:
+	# 	aux += q.show() + "   "
+	# print("Alice encoded and send:", aux)
 	if eve_present:
 		eve_basis = generate_random_bits(N)
+		# print("Eve basis: ", eve_basis)
 		eve = quantum_user("Eve")
 		eve_bits = eve.receive(data=alice_qubits,basis=eve_basis)
+		# print("Eve receieved: ", eve_bits)
 		alice_qubits = eve.send(data=eve_bits,basis=eve_basis)
+		# aux = ""
+		# for q in alice_qubits:
+		# 	aux += q.show() + "   "
+		# print("Eve encoded and send", aux)
 	bob_basis = generate_random_bits(N)
+	# print("Bob basis: ",bob_basis)
 	bob = quantum_user("Bob")
 	bob_bits = bob.receive(data=alice_qubits,basis=bob_basis)
+	# print("Bob receieved: ", bob_bits)
 	alice_key = list()
 	bob_key = list()
+	print(alice_key)
+	print(bob_key)
 	for i in range(N):
 		if alice_basis[i] == bob_basis[i]:
 			alice_key.append(alice_bits[i])
 			bob_key.append(bob_bits[i])
+	print(alice_key)
+	print(bob_key)
 	if alice_key != bob_key:
 		key = False
 		length = None
@@ -150,8 +168,8 @@ def QKD(N,verbose=False,eve_present=False):
 		input()
 		print("Alice and Bob interchange basis through Internet and compare their basis.")
 		input()
-	#print("Key obtained: " + ''.join(str(e) for e in bob_bits)
-	#print("Efficiency: {0}%".format(str(round((float(len(key))/float(len(alice_bits)))*100.0)))
+	# print("Key obtained: " + ''.join(str(e) for e in bob_bits))
+	# print("Efficiency: {0}%".format(str(round((float(length)/float(len(alice_bits)))*100.0))))
 	return key
 
 if __name__ == "__main__":
